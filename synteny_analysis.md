@@ -24,6 +24,31 @@ wgd ksd pere_dmd/${fasta}.tsv ${fasta} -o pere_ksd
 wgd syn -f mRNA -a pere_dmd/${fasta}.tsv ${gff} -ks pere_ksd/${fasta}.tsv.ks.tsv -o pere_syn
 ```
 ## 3. Detect Synteny with GENESPACE
-
+The groups of shared orthologs identified by OrthoFinder were used to identify blocks of conserved gene order that cluster into regions of synteny using the GENESPACE v1.4 R package with default settings (Lovell et al., 2022). 
 ```
+#Initialize the GENESPACE run & set parameters
+gpar <- init_genespace(wd = my_wd, path2mcscanx = local_path2mcscanx)
+
+#Run GENESPACE
+out <- run_genespace(gsParam = gpar)
+```
+Additional formatting of the resulting riparian plot:
+```
+ggthemes <- ggplot2::theme(
+ panel.background = ggplot2::element_rect(fill = "white")
+)
+
+ripDat <- plot_riparian(
+ gsParam = out,
+ braidAlpha = 0.75,
+ chFill = "lightgrey",
+ addThemes = ggthemes,
+ refGenome = "pere",
+ genomeIDs = c("echium", "pere"),
+ useRegions = TRUE,
+ chrLabFontSize = 1,
+ useOrder = TRUE,
+ reorderBySynteny = TRUE,
+ chrExpand = 4
+)
 ```
