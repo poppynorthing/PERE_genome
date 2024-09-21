@@ -1,7 +1,7 @@
 # <i> Pectocarya recurvata </i> (PERE) Reference Genome
 
 Code used in the paper:
-"Chromosome-scale reference genome of <i>Pectocarya recurvata</i>, a species with the smallest genome size recorded in Boraginaceae" by Poppy C. Northing, D. Larry Venable, and Katrina M. Dlugosch (2024)
+"Chromosome-scale reference genome of <i>Pectocarya recurvata</i>, a species with the smallest genome size recorded in Boraginaceae" by Poppy C. Northing, Jessie Pelosi, D. Larry Venable, and Katrina M. Dlugosch (2024)
 
 Code written by: Poppy C. Northing
 
