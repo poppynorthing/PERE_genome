@@ -100,7 +100,7 @@ First, align Iso-Seq reads to the reference genome:
 ```
 T=16 # number of threads
 
-minimap2 -t${T} -ax splice:hq -uf pere_assembly_temasked.fa transcripts.fasta > transcript_alignment.sam
+minimap2 -t${T} -ax splice:hq -uf pere_assembly_te_masked.fa transcripts.fasta > transcript_alignment.sam
 
 samtools view -bS --threads ${T} transcript_alignment.sam -o transcript_alignment.bam
 ```
@@ -108,7 +108,7 @@ Then, run BRAKER3 for long read transcript evidence:
 ```
 singularity exec braker3_lr.sif braker.pl --workingdir=braker_isoseq_ch_vdp_31aug2024 \
 --genome=pere_assembly_te_masked.fa --prot_seq=Eudicot10.fa –-bam=transcript_alignment.bam \
---threads=16 --species=braker_isoseq_ch_vdp_31aug2024 --gff3 --AUGUSTUS_CONFIG_PATH=$AUGUSTUS_CONFIG_PATH
+--threads=16 --species=pere --gff3 --AUGUSTUS_CONFIG_PATH=$AUGUSTUS_CONFIG_PATH
 ```
 
 ## 3. Stuctural Annotation Evaluation
@@ -126,5 +126,5 @@ singularity run agat_1.0.0--pl5321hdfd78af_0.sif agat_sp_statistics.pl \
 ## 3. Gene Function Annotation
 The final protein set was functionally annotated using InterProScan v5.66-98.0 with the --goterms to include GO terms in the annotation (Jones et al., 2014).
 ```
-interproscan -i ch_eud10.aa -d output_go --goterms
+interproscan -i pere_proteins.aa -d output_go --goterms
 ```
