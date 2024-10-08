@@ -52,3 +52,16 @@ ripDat <- plot_riparian(
  chrExpand = 4
 )
 ```
+
+## 4. Calculate syntenic depth with MCscan
+The syntenic depth ratio of each syntenic block (collinear sets of genes > 5) was calculated using the pythonic version of MCscan, which depends on LAST (Tang et al., 2008; Kiełbasa et al., 2011). 
+```
+#combine bed files for two genomes of interest
+cat pere.bed echium.bed > pere-echium.bed #combine bed files
+
+#run mcscan
+python3 -m jcvi.compara.catalog ortholog pere_peps echium_peps
+
+#plot histogram of syntenic depths
+python3 -m jcvi.compara.synteny depth --histogram pere_peps.echium_peps.anchors
+```
