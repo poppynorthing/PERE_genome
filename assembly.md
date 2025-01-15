@@ -41,3 +41,32 @@ The initial assembly was assessed for completeness using 2326 Benchmarking Unive
 ```
 busco -i assembly.fasta -m genome -c 15 -l eudicots_odb10 -o pere_eudicot_busco
 ```
+
+## 4. Contamination Detection
+The resulting initial assembly was assessed for contaminants using BlobTools vX (reference). We used BlobTools to detect foreign DNA sequence based on the following information: GC content, coverage of raw reads over the assembly, and blast hits. 
+
+We generated an alignment of the raw reads to the initial assembly to get coverage information using Minimap2 vX (Ref). 
+```
+#Generate an alignment of the raw reads to the intial assembly using Minimap2
+minimap2 -ax map-hifi initial_assembly.fa PERE.hifi_reads.fasta.gz > assembly_raw_reads.sam
+
+#Convert to Bam format and sort for Blobtools
+samtools view -b -o assembly_raw_reads.bam assembly_B_raw_reads.sam
+samtools sort -o assembly_raw_reads.sorted.bam assembly_raw_reads.bam
+```
+We generated blast hits on the intial assembly using the blast nucleotide database (Refs)
+```
+#Generate blast hits 
+```
+
+Finally, we ran Blobtools vX (Ref). 
+```
+# Create a blob directory from the initial assembly
+blobtools create --taxdump taxdump --taxid 2005094 --replace --fasta initial_assembly.fa initial_assembly_blobdir
+
+# Add relevant information to the blob directory (coverage, blast hits, and BUSCO)
+blobtools add --busco full_table.tsv --cov assembly_raw_reads.sorted.bam --hits blast_hits.out initial_assembly_blobdir
+
+# Generate blobplots
+blobtools view [FILL IN] initial_assembly_blobdir
+```
