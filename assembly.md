@@ -45,7 +45,7 @@ busco -i assembly.fasta -m genome -c 15 -l eudicots_odb10 -o pere_eudicot_busco
 ## 4. Contamination Detection
 The resulting initial assembly was assessed for contaminants using BlobTools vX (reference). We used BlobTools to detect foreign DNA sequence based on the following information: GC content, coverage of raw reads over the assembly, and blast hits. 
 
-We generated an alignment of the raw reads to the initial assembly to get coverage information using Minimap2 vX (Ref). 
+We generated an alignment of the raw reads to the initial assembly to get coverage information using Minimap2 v2.28 (Li, 2018)). 
 ```
 #Generate an alignment of the raw reads to the intial assembly using Minimap2
 minimap2 -ax map-hifi initial_assembly.fa PERE.hifi_reads.fasta.gz > assembly_raw_reads.sam
