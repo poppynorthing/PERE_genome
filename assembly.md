@@ -43,30 +43,37 @@ busco -i assembly.fasta -m genome -c 15 -l eudicots_odb10 -o pere_eudicot_busco
 ```
 
 ## 4. Contamination Detection
-The resulting initial assembly was assessed for contaminants using BlobTools vX (reference). We used BlobTools to detect foreign DNA sequence based on the following information: GC content, coverage of raw reads over the assembly, and blast hits. 
+The final assembly was assessed for contaminants using BlobToolKit v4.3.5 (Challis et al., 2020). We used BlobTools to detect foreign DNA sequence based on the following information: GC content, coverage of raw reads over the assembly, and BLAST hits. 
 
-We generated an alignment of the raw reads to the initial assembly to get coverage information using Minimap2 v2.28 (Li, 2018)). 
+We generated an alignment of the raw reads to the final assembly to get coverage information using Minimap2 v2.28 (Li, 2018)). 
 ```
-#Generate an alignment of the raw reads to the intial assembly using Minimap2
-minimap2 -ax map-hifi initial_assembly.fa PERE.hifi_reads.fasta.gz > assembly_raw_reads.sam
+#Generate an alignment of the raw reads to the final assembly using Minimap2
+minimap2 -ax map-hifi final_assembly.fa PERE.hifi_reads.fasta.gz > assembly_raw_reads.sam
 
 #Convert to Bam format and sort for Blobtools
-samtools view -b -o assembly_raw_reads.bam assembly_B_raw_reads.sam
+samtools view -b -o assembly_raw_reads.bam assembly_raw_reads.sam
 samtools sort -o assembly_raw_reads.sorted.bam assembly_raw_reads.bam
 ```
-We generated blast hits on the intial assembly using the blast nucleotide database (Refs)
+We generated BLAST hits on the final assembly using the BLAST nucleotide database (Altschul et al., 1990)
 ```
-#Generate blast hits 
+#Generate BLAST hits
+blastn -db nt -query final_assembly.fa \
+-outfmt "6 qseqid staxids bitscore std sscinames sskingdoms stitle" \
+-evalue 1e-25 \
+-max_hsps 1 \
+-max_target_seqs 10 \
+-num_threads 32 \
+-out blast_hits.out
 ```
 
-Finally, we ran Blobtools vX (Ref). 
+Finally, we ran BlobToolKit v4.3.5 (Challis et al., 2020). 
 ```
-# Create a blob directory from the initial assembly
-blobtools create --taxdump taxdump --taxid 2005094 --replace --fasta initial_assembly.fa initial_assembly_blobdir
+# Create a blob directory from the final assembly
+blobtools create --taxdump taxdump --taxid 2005094 --replace --fasta final_assembly.fa pere_blobdir
 
-# Add relevant information to the blob directory (coverage, blast hits, and BUSCO)
-blobtools add --busco full_table.tsv --cov assembly_raw_reads.sorted.bam --hits blast_hits.out initial_assembly_blobdir
+# Add the coverage and blast hits to the blobdir
+blobtools add --taxdump taxdump --cov assembly_raw_reads.bam --hits blast_hits.out pere_blobdir
 
 # Generate blobplots
-blobtools view [FILL IN] initial_assembly_blobdir
+blobtools view pere_blobdir
 ```
