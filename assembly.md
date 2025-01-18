@@ -72,7 +72,7 @@ Finally, we ran BlobToolKit v4.3.5 (Challis et al., 2020).
 blobtools create --taxdump taxdump --taxid 2005094 --replace --fasta final_assembly.fa pere_blobdir
 
 # Add the coverage and blast hits to the blobdir
-blobtools add --taxdump taxdump --cov assembly_raw_reads.bam --hits blast_hits.out pere_blobdir
+blobtools add --taxdump taxdump --taxrule bestsumorder --cov assembly_raw_reads.bam --hits blast_hits.out pere_blobdir
 
 # Generate blobplots
 blobtools view pere_blobdir
