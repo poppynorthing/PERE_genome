@@ -45,7 +45,7 @@ busco -i assembly.fasta -m genome -c 15 -l eudicots_odb10 -o pere_eudicot_busco
 ## 4. Contamination Detection
 The final assembly was assessed for contaminants using BlobToolKit v4.3.5 (Challis et al., 2020). We used BlobTools to detect foreign DNA sequence based on the following information: GC content, coverage of raw reads over the assembly, and BLAST hits. 
 
-We generated an alignment of the raw reads to the final assembly to get coverage information using Minimap2 v2.28 (Li, 2018)). 
+We generated an alignment of the raw reads to the final assembly to get coverage information using Minimap2 v2.28 (Li, 2018). 
 ```
 #Generate an alignment of the raw reads to the final assembly using Minimap2
 minimap2 -ax map-hifi final_assembly.fa PERE.hifi_reads.fasta.gz > assembly_raw_reads.sam
@@ -54,7 +54,7 @@ minimap2 -ax map-hifi final_assembly.fa PERE.hifi_reads.fasta.gz > assembly_raw_
 samtools view -b -o assembly_raw_reads.bam assembly_raw_reads.sam
 samtools sort -o assembly_raw_reads.sorted.bam assembly_raw_reads.bam
 ```
-We generated BLAST hits on the final assembly using the BLAST nucleotide database (Altschul et al., 1990)
+We generated BLAST hits on the final assembly using the BLAST nucleotide database (Altschul et al., 1990).
 ```
 #Generate BLAST hits
 blastn -db nt -query final_assembly.fa \
