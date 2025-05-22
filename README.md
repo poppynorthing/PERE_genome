@@ -5,7 +5,7 @@ Code used in the paper:
 
 Code written by: Poppy C. Northing
 
-Last updated: 21MAY2025
+Last updated: 22MAY2025
 
 ## Scripts
 <b>assembly.md</b> describes the K-mer analysis, genome assembly, and contamination screening of the <i>P. recurvata</i> reference genome.
